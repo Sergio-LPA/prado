@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tasa de Cambio - Envios de Dinero</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css?v=6">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+</head>
+
+<body>
+    <div class="background-animation"></div>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <h1>Tasas para Envíos de Dinero</h1>
+                <p class="disclaimer">No aplica para cambio de divisas en efectivo</p>
+            </div>
+            <p id="last-updated" class="subtitle">Actualizando...</p>
+        </header>
+
+        <div id="rates-grid" class="rates-grid">
+            <!-- Loading state -->
+            <div class="loading">Cargando tasas...</div>
+        </div>
+    </div>
+
+    <script src="script.js?v=6"></script>
+</body>
+
+</html>

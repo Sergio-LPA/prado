@@ -1,0 +1,27 @@
+name: Deploy to FTP
+
+on:
+  push:
+    branches:
+      - main
+      - master
+
+nodes:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    steps:
+    - name: Get latest code
+      uses: actions/checkout@v4
+
+    - name: Sync files
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+      with:
+        server: ${{ secrets.FTP_SERVER }}
+        username: ${{ secrets.FTP_USERNAME }}
+        password: ${{ secrets.FTP_PASSWORD }}
+        # Optional: set this to the path on your server if it's not the root
+        # server-dir: /public_html/tasas.lhmoney.es/ 
+        protocol: ftp
+        port: 21
+        # strict: true # Fails if host verification fails
