@@ -204,6 +204,14 @@ h1 {
     transform-origin: bottom center;
 }
 
+.flag-img {
+    width: 8vh;
+    height: 8vh;
+    object-fit: contain;
+    display: block;
+    border-radius: 0.5vh;
+}
+
 /* Desynchronize flags */
 .rate-card:nth-child(odd) .country-flag {
     animation-delay: 0.5s;

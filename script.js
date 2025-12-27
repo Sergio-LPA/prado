@@ -1,36 +1,37 @@
 const SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSKvKZv-zizzPB8BMhqPQme5WwzhhYgScgZLv3bmU5RMjoYsoCy8Z3VFBowb8AgtEVSxOdB6yQ05QpR/pub?gid=0&single=true&output=csv';
 
-// Base map, but we will make it smarter fallback
+// Map countries to ISO 3166-1 alpha-2 codes for flag images
 const FLAG_MAP = {
-    'Colombia': '🇨🇴',
-    'Argentina': '🇦🇷',
-    'Cuba': '🇨🇺',
-    'Bolivia': '🇧🇴',
-    'Brasil': '🇧🇷',
-    'Brazil': '🇧🇷',
-    'Ecuador': '🇪🇨',
-    'Filipinas': '🇵🇭',
-    'Guatemala': '🇬🇹',
-    'Honduras': '🇭🇳',
-    'Indonesia': '🇮🇩',
-    'Paraguay': '🇵🇾',
-    'Rep Dominicana': '🇩🇴',
-    'Republica Dominicana': '🇩🇴',
-    'Rep. Dominicana': '🇩🇴',
-    'Venezuela': '🇻🇪',
-    'Peru': '🇵🇪',
-    'Perú': '🇵🇪',
-    'Mexico': '🇲🇽',
-    'México': '🇲🇽',
-    'Chile': '🇨🇱',
-    'Uruguay': '🇺🇾',
-    'Nicaragua': '🇳🇮',
-    'El Salvador': '🇸🇻',
-    'Panama': '🇵🇦',
-    'Costa Rica': '🇨🇷',
-    'España': '🇪🇸',
-    'USA': '🇺🇸',
-    'Estados Unidos': '🇺🇸'
+    'Colombia': 'co',
+    'Argentina': 'ar',
+    'Cuba': 'cu',
+    'Bolivia': 'bo',
+    'Brasil': 'br',
+    'Brazil': 'br',
+    'Ecuador': 'ec',
+    'Filipinas': 'ph',
+    'Guatemala': 'gt',
+    'Honduras': 'hn',
+    'Indonesia': 'id',
+    'Paraguay': 'py',
+    'Rep Dominicana': 'do',
+    'Republica Dominicana': 'do',
+    'Rep. Dominicana': 'do',
+    'Venezuela': 've',
+    'Peru': 'pe',
+    'Perú': 'pe',
+    'Mexico': 'mx',
+    'México': 'mx',
+    'Chile': 'cl',
+    'Uruguay': 'uy',
+    'Nicaragua': 'ni',
+    'El Salvador': 'sv',
+    'Panama': 'pa',
+    'Panamá': 'pa',
+    'Costa Rica': 'cr',
+    'España': 'es',
+    'USA': 'us',
+    'Estados Unidos': 'us'
 };
 
 const CURRENCY_MAP = {
@@ -77,22 +78,30 @@ async function fetchData() {
 }
 
 function getFlag(countryName) {
-    if (!countryName) return '🌐';
+    if (!countryName) return '<img src="https://flagcdn.com/w80/xx.png" alt="🌐" class="flag-img">';
+
     // Direct match
-    if (FLAG_MAP[countryName]) return FLAG_MAP[countryName];
+    if (FLAG_MAP[countryName]) {
+        const code = FLAG_MAP[countryName];
+        return `<img src="https://flagcdn.com/w80/${code}.png" alt="${countryName}" class="flag-img">`;
+    }
 
     // Normalized match (case insensitive, trim)
     const normalized = countryName.trim();
     for (const key in FLAG_MAP) {
         if (key.toLowerCase() === normalized.toLowerCase()) {
-            return FLAG_MAP[key];
+            const code = FLAG_MAP[key];
+            return `<img src="https://flagcdn.com/w80/${code}.png" alt="${countryName}" class="flag-img">`;
         }
     }
 
-    // Fallback for known patterns?
-    if (normalized.includes('Dominic')) return '🇩🇴';
+    // Fallback for known patterns
+    if (normalized.includes('Dominic')) {
+        return '<img src="https://flagcdn.com/w80/do.png" alt="República Dominicana" class="flag-img">';
+    }
 
-    return '🌐'; // Default globe
+    // Default globe (using a generic world flag or placeholder)
+    return '<img src="https://flagcdn.com/w80/un.png" alt="🌐" class="flag-img">';
 }
 
 function processAndRender(rawData) {
